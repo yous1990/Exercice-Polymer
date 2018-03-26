@@ -12,10 +12,51 @@
         @apply --paper-font-common-base;
         padding: 24px;
       }
+      
+      .container {
+        position: relative;
+        box-shadow: 8px 8px 0px #aaa;
+      }
+
+      .container:hover{
+        box-shadow: 13px 13px 0px #aaa;
+      }
+
+      .description {
+        font-size: 24px;
+        padding: 24px 16px;
+        color: #212121;
+        position: absolute;
+        bottom: 0;
+        opacity: 0;
+      }
+
+      .description:hover {
+        opacity: 1;
+      }
+
+      .date-author {
+        Font-size: 14px;
+        padding: 0 16px;
+        color: #757575;
+      }
     </style>
 
-    <h1>Hello from [[prop1]]!</h1>
-
+    <h1>Hello from [[card.author]]!</h1>
+    <div class="container">
+      <div class="imgContainer">
+          <a href="[[card.url]]" target="_blank">
+            <img src="data:[[card.urlToImage]];base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==" 
+              height="350">
+          </a>
+      </div>
+      <div class="description">
+        [[card.title]] : [[card.description]]
+      </div>
+      <div class="date-author">
+        [[card.publishedAt]] -[[card.author]]
+      </div>
+    </div>
   </template>
 
   <script>
@@ -27,6 +68,7 @@
      * @polymer
      * @demo demo/index.html
      */
+
     class NewsCard extends Polymer.Element {
       static get is() { return 'news-card'; }
       static get properties() {
@@ -34,6 +76,25 @@
           prop1: {
             type: String,
             value: 'property 1'
+          },
+          author: {
+            type: String
+          },
+          description: {
+            type: String
+          },
+          img: {
+            type: String
+          },
+          href: {
+            type: String
+          },
+          publishedAt: {
+            type: Date,
+            serialize: function (date) 
+              {
+                return date.toDateString(); 
+              },
           }
         };
       }
